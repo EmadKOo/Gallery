@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.example.studio.utility.Constants.CAMERA_PERMISSION_CODE;
 import static com.example.studio.utility.Constants.CAPTURED_IMAGE;
 import static com.example.studio.utility.Constants.GALLERY_PERMISSION_CODE;
+import static com.example.studio.utility.Constants.PICK_GALLERY_CODE;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -37,9 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @RequiresApi(api = Build.VERSION_CODES.M)
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
-    private static final String TAG = "EMADADADA";
     private FragmentHomeBinding mBinding;
-    private File imageFile;
     private Uri imageUri;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,9 @@ public class HomeFragment extends Fragment {
             }
         });
         mBinding.openGallery.setOnClickListener(view -> {
-            hasGalleryPermission();
+            if (hasGalleryPermission()){
+                pickGallery();
+            }
         });
     }
 
@@ -90,11 +91,17 @@ public class HomeFragment extends Fragment {
     private void pickPhoto() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "NewPic");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "Image To Text");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image");
         imageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CAPTURED_IMAGE);
+    }
+
+    private void pickGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("*/*");
+        startActivityForResult(intent, PICK_GALLERY_CODE);
     }
 
     @Override
@@ -110,6 +117,7 @@ public class HomeFragment extends Fragment {
         } else if (requestCode == GALLERY_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getActivity(), "gallery permission granted", Toast.LENGTH_LONG).show();
+                pickGallery();
             } else {
                 Toast.makeText(getActivity(), "gallery permission denied", Toast.LENGTH_LONG).show();
             }
@@ -119,9 +127,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: outside " + resultCode + " "+ requestCode);
-        Toast.makeText(getActivity(), "Eadda", Toast.LENGTH_SHORT).show();
-        if (requestCode== CAPTURED_IMAGE && resultCode== RESULT_OK )
-            mBinding.selectedImage.setImageURI(imageUri);
+        if (requestCode== CAPTURED_IMAGE && resultCode== RESULT_OK ){
+
+        }else if (requestCode== PICK_GALLERY_CODE && resultCode==RESULT_OK){
+
+        }
     }
 }
