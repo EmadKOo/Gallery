@@ -9,8 +9,15 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:context=".presentaion.fragments.HomeFragment">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/takePhoto"
@@ -33,7 +40,14 @@
             android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
             android:layout_weight="1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <ImageView
+            android:id="@+id/selectedImage"
+            android:layout_width="200sp"
+            android:layout_height="200dp"
+            android:background="@color/teal_200"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
