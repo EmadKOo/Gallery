@@ -18,9 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,17 +29,13 @@ import android.widget.Toast;
 import com.example.studio.R;
 import com.example.studio.databinding.FragmentHomeBinding;
 
-import java.io.File;
-
-import javax.xml.transform.Result;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding mBinding;
-    private Uri imageUri;
+    private Uri mediaUri;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +88,9 @@ public class HomeFragment extends Fragment {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "NewPic");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image");
-        imageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        mediaUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mediaUri);
         startActivityForResult(intent, CAPTURED_IMAGE);
     }
 
@@ -128,8 +124,23 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode== CAPTURED_IMAGE && resultCode== RESULT_OK ){
+            Bundle bundle = new Bundle();
+            bundle.putString("mediaPath", mediaUri.toString());
+            bundle.putBoolean("isPhoto", true);
+            Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
 
         }else if (requestCode== PICK_GALLERY_CODE && resultCode==RESULT_OK){
+            Bundle bundle = new Bundle();
+            bundle.putString("mediaPath", data.getData().toString());
+
+            if (data.getData().toString().contains("jpg")||data.getData().toString().contains("png")||data.getData().toString().contains("jpeg")){
+                bundle.putBoolean("isPhoto", true);
+                Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
+            }else {
+                bundle.putBoolean("isPhoto", false);
+                Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
+            }
+
 
         }
     }
