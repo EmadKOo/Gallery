@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,15 +134,13 @@ public class HomeFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("mediaPath", data.getData().toString());
 
-            if (data.getData().toString().contains("jpg")||data.getData().toString().contains("png")||data.getData().toString().contains("jpeg")){
+            if (data.getType().startsWith("image")){
                 bundle.putBoolean("isPhoto", true);
                 Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
             }else {
                 bundle.putBoolean("isPhoto", false);
                 Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
             }
-
-
         }
     }
 }
