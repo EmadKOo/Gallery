@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.MediaController;
 
 import com.example.studio.databinding.FragmentViewerBinding;
 
@@ -44,6 +45,9 @@ public class ViewerFragment extends Fragment {
             if (isPhoto)
                 mBinding.selectedImage.setImageURI(mediaUri);
             else {
+                MediaController mediaController = new MediaController(getActivity());
+                mediaController.setAnchorView( mBinding.selectedVideo);
+                mBinding.selectedVideo.setMediaController(mediaController);
                 mBinding.selectedVideo.setVideoURI(mediaUri);
                 mBinding.selectedVideo.start();
             }
