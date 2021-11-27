@@ -3,4 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="takePhoto">التقط صوره</string>
     <string name="openGallery">اختار صوره</string>
+    <string name="cameraGranted">تم منح اذن الكاميرا</string>
+    <string name="cameraDenied">تم رفض اذن الكاميرا</string>
+    <string name="galleryGranted">تم منح اذن الملفات</string>
+    <string name="galleryDenied">تم رفض اذن الملفات</string>
+    <string name="newImage">صوره جديده</string>
+    <string name="img">ميديا</string>
 </resources>

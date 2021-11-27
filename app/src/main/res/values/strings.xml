@@ -4,4 +4,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="takePhoto">Take Photo</string>
     <string name="openGallery">Open Gallery</string>
+    <string name="cameraGranted">camera permission granted</string>
+    <string name="cameraDenied">camera permission denied</string>
+    <string name="galleryGranted">gallery permission granted</string>
+    <string name="galleryDenied">gallery permission denied</string>
+    <string name="newImage">NewPic</string>
+    <string name="img">Image</string>
 </resources>

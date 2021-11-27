@@ -87,8 +87,8 @@ public class HomeFragment extends Fragment {
 
     private void pickPhoto() {
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "NewPic");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "Image");
+        values.put(MediaStore.Images.Media.TITLE, getString(R.string.newImage));
+        values.put(MediaStore.Images.Media.DESCRIPTION, getString(R.string.img));
         mediaUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mediaUri);
@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
 
     private void pickGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("*/*");
+        intent.setType("image/* video/*");
         startActivityForResult(intent, PICK_GALLERY_CODE);
     }
 
@@ -106,17 +106,17 @@ public class HomeFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.cameraGranted), Toast.LENGTH_LONG).show();
                 pickPhoto();
             } else {
-                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.cameraDenied), Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == GALLERY_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "gallery permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.galleryGranted), Toast.LENGTH_LONG).show();
                 pickGallery();
             } else {
-                Toast.makeText(getActivity(), "gallery permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.galleryDenied), Toast.LENGTH_LONG).show();
             }
         }
     }
