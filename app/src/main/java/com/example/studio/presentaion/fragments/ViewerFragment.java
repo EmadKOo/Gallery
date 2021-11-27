@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.MediaController;
 
+import com.example.studio.R;
 import com.example.studio.databinding.FragmentViewerBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -38,10 +39,11 @@ public class ViewerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          if (getArguments() != null) {
-            isPhoto = getArguments().getBoolean("isPhoto");
+            isPhoto = getArguments().getBoolean(getString(R.string.isPhoto));
             mBinding.setIsPhoto(isPhoto);
-
-            mediaUri = Uri.parse(getArguments().getString("mediaPath"));
+            mBinding.setTitle(getArguments().getString(getString(R.string.title)));
+            mBinding.setSize(String.valueOf(getArguments().getInt(getString(R.string.size))));
+            mediaUri = Uri.parse(getArguments().getString(getString(R.string.mediaPath)));
             if (isPhoto)
                 mBinding.selectedImage.setImageURI(mediaUri);
             else {

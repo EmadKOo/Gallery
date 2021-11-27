@@ -6,8 +6,14 @@
     <data>
 
         <variable
+            name="title"
+            type="String" />
+        <variable
             name="isPhoto"
             type="Boolean" />
+        <variable
+            name="size"
+            type="String" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +21,32 @@
             android:layout_height="match_parent"
             android:background="@color/dark_background"
             tools:context=".presentaion.fragments.ViewerFragment">
+
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo"
+                android:padding="10sp"
+                android:text="@{title}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/fileSizeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo"
+                android:padding="10sp"
+                android:text="@{size +` `+ @string/mega}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleTV"/>
 
             <ImageView
                 android:id="@+id/selectedImage"
@@ -26,8 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toBottomOf="@id/fileSizeTV" />
 
             <VideoView
                 android:id="@+id/selectedVideo"
@@ -38,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toBottomOf="@id/fileSizeTV"
+                app:layout_constraintVertical_bias="0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

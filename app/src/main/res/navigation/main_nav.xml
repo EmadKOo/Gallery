@@ -27,5 +27,11 @@
         <argument
             android:name="isPhoto"
             app:argType="boolean" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="size"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -8,6 +8,12 @@
     <string name="cameraDenied">camera permission denied</string>
     <string name="galleryGranted">gallery permission granted</string>
     <string name="galleryDenied">gallery permission denied</string>
-    <string name="newImage">NewPic</string>
+    <string name="newImage">New Captured Image</string>
     <string name="img">Image</string>
+    <string name="mega">Mega Byte</string>
+    <string name="imageVideo">image/* video/*</string>
+    <string name="mediaPath">mediaPath</string>
+    <string name="isPhoto">isPhoto</string>
+    <string name="title">title</string>
+    <string name="size">size</string>
 </resources>

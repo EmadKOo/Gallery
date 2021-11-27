@@ -9,4 +9,5 @@
     <string name="galleryDenied">تم رفض اذن الملفات</string>
     <string name="newImage">صوره جديده</string>
     <string name="img">ميديا</string>
+    <string name="mega">ميجا بايت </string>
 </resources>

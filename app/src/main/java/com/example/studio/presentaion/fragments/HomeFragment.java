@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.studio.R;
 import com.example.studio.databinding.FragmentHomeBinding;
+
+import java.io.File;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -97,8 +100,20 @@ public class HomeFragment extends Fragment {
 
     private void pickGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/* video/*");
+        intent.setType(getString(R.string.imageVideo));
         startActivityForResult(intent, PICK_GALLERY_CODE);
+    }
+
+    private Integer getFileSize(Uri data){
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(data, filePathColumn, null, null, null);
+        assert cursor != null;
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String mediaPath1 = cursor.getString(columnIndex);
+        cursor.close();
+        File file = new File(mediaPath1);
+        return Integer.parseInt(String.valueOf(file.length() / 1048576));
     }
 
     @Override
@@ -126,19 +141,22 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode== CAPTURED_IMAGE && resultCode== RESULT_OK ){
             Bundle bundle = new Bundle();
-            bundle.putString("mediaPath", mediaUri.toString());
-            bundle.putBoolean("isPhoto", true);
+            bundle.putString(getString(R.string.mediaPath), mediaUri.toString());
+            bundle.putBoolean(getString(R.string.isPhoto), true);
+            bundle.putString(getString(R.string.title), getString(R.string.newImage));
+            bundle.putInt(getString(R.string.size), getFileSize(mediaUri));
             Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
 
         }else if (requestCode== PICK_GALLERY_CODE && resultCode==RESULT_OK){
             Bundle bundle = new Bundle();
-            bundle.putString("mediaPath", data.getData().toString());
-
+            bundle.putString(getString(R.string.mediaPath), data.getData().toString());
+            bundle.putString(getString(R.string.title), data.getData().getLastPathSegment().substring(data.getData().getLastPathSegment().lastIndexOf("/")+1));
+            bundle.putInt(getString(R.string.size), getFileSize(data.getData()));
             if (data.getType().startsWith("image")){
-                bundle.putBoolean("isPhoto", true);
+                bundle.putBoolean(getString(R.string.isPhoto), true);
                 Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
             }else {
-                bundle.putBoolean("isPhoto", false);
+                bundle.putBoolean(getString(R.string.isPhoto), false);
                 Navigation.findNavController(requireActivity(), R.id.nav_main_Fragmnet).navigate(R.id.action_homeFragment_to_viewerFragment, bundle);
             }
         }
